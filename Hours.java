@@ -1,7 +1,7 @@
 public class Hours extends Animals{
 
-    public Hours(String nameAnimal, String skillsAnimal, String dateOfBirthday) {
-        super(nameAnimal, skillsAnimal, dateOfBirthday);
+    public Hours(String nameAnimal, String skillsAnimal, String age) {
+        super(nameAnimal, skillsAnimal, age);
     }
 
     @Override

@@ -1,13 +1,13 @@
 public abstract class Animals {
     private String nameAnimal;
     private String skillsAnimal;
-    private String dateOfBirthday;
+    private String age;
 
     // конструктор для присваивания значения переменной данного объекта
-    public Animals(String nameAnimal, String skillsAnimal, String dateOfBirthday) {
+    public Animals(String nameAnimal, String skillsAnimal, String age) {
         this.nameAnimal = nameAnimal;
         this.skillsAnimal = skillsAnimal;
-        this.dateOfBirthday=dateOfBirthday;
+        this.age =age;
     }
 
     // геттеры и сеттеры для доступа. Принцип открытости закрытости
@@ -18,8 +18,8 @@ public abstract class Animals {
     public String getSkillsAnimal() {
         return skillsAnimal;
     }
-    public String getDateOfBirthday() {
-        return dateOfBirthday;
+    public String getAge() {
+        return age;
     }
 
     public void setSkillsAnimal(String updatedSkills) {

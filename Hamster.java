@@ -1,7 +1,7 @@
 public class Hamster extends Animals{
 
-    public Hamster(String nameAnimal, String skillsAnimal, String dateOfBirthday) {
-        super(nameAnimal, skillsAnimal, dateOfBirthday);
+    public Hamster(String nameAnimal, String skillsAnimal, String age) {
+        super(nameAnimal, skillsAnimal, age);
     }
 
     @Override

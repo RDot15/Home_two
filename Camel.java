@@ -1,7 +1,7 @@
 public class Camel extends Animals{
 
-    public Camel(String nameAnimal, String skillsAnimal, String dateOfBirthday) {
-        super(nameAnimal, skillsAnimal, dateOfBirthday);
+    public Camel(String nameAnimal, String skillsAnimal, String age) {
+        super(nameAnimal, skillsAnimal, age);
     }
 
     @Override
