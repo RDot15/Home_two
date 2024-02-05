@@ -4,15 +4,15 @@ import java.util.*;
 
     public class Database {
         private final List<Animals> animals;
-        private static final String FILE_PATH = "app/database.txt";
+        private static final String FILE_PATH = "databaseAnimal.txt";
 
         public Database() {
             animals = new ArrayList<>();
             loadDatabase();
         }
 
-        public void addAnimal(Animals animal) {
-            animals.add((Animals) animals);   // Спорный момент
+        public void addAnimal(Animals an) {
+            animals.add(an);   // Спорный момент
             saveDatabase();
         }
 
@@ -28,7 +28,7 @@ import java.util.*;
 
 
 
-        public void teachNewCommand(String name, String command) {
+        public void newCommand(String name, String command) {
             for (Animals animals : animals) {
                 if (animals.getNameAnimal().equals(name)) {
                     String[] commands = command.split(",");
@@ -49,26 +49,32 @@ import java.util.*;
         private void loadDatabase() {
             try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
                 String line;
-                while ((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) !=null) {
                     String[] data = line.split(",");
                     if (data.length >= 3) {
+
                         String className = data[0];
                         String name = data[1];
-                        String skills = String.join(",", Arrays.copyOfRange(data, 2, data.length));
+                        String age = data[2];
+                        String skills = String.join(",", Arrays.copyOfRange(data, 3, data.length));
 
                         Animals animals;
                         switch (className) {
-                            case "Dog" -> animals = new Dog(name, skills);
-                            case "Cat" -> animals = new Cat(name, skills);
-                            case "Hamster" -> animals = new Hamster(name, skills);
-                            case "Donkey" -> animals = new Donkey(name, skills);
-                            case "Horse" -> animals = new Hours(name, skills);
-                            default -> {
-                                System.out.println("Неизвестный класс животного: " + className);
-                                continue;
+                            case "Dog" :
+                                            animals = new Dog(name, skills, age);
+                            case "Cat" :
+                                            animals = new Cat(name, skills, age);
+                            case "Hamster" :
+                                            animals = new Hamster(name, skills, age);
+                            case "Donkey" :
+                                            animals = new Donkey(name, skills, age);
+                            case "Horse" :
+                                            animals = new Hours(name, skills, age);
+                            default : {
+                                              System.out.println("Неверный класс животного: " + className);
+                            continue;
                             }
                         }
-                        this.animals.add(animals);
                     } else {
                         System.out.println("Некорректные данные в файле: " + line);
                     }
@@ -92,7 +98,7 @@ import java.util.*;
 
                 fileScanner.close();
             } catch (FileNotFoundException e) {
-                System.out.println("Файл с данными о животных не найден.");
+                System.out.println("Файл с данными не найден.");
             }
         }
 
@@ -102,12 +108,12 @@ import java.util.*;
                     String className = animals.getClass().getSimpleName();
                     String name = animals.getNameAnimal();
                     String skills = animals.getSkillsAnimal().replaceAll(",\\s+", ",");
-
-                    String line = className + "," + name + "," + skills;
+                    String age = animals.getAge();
+                    String line = className + "," + name + "," + skills+ "," + age;
                     writer.write(line);
                     writer.newLine();
                 }
-                System.out.println("База данных успешно сохранена.");
+                System.out.println("База данных сохранена.");
             } catch (IOException e) {
                 System.out.println("Ошибка при сохранении базы данных: " + e.getMessage());
             }

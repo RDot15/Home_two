@@ -25,7 +25,7 @@ public class Menu {
 
                     switch (choice) {
                         case 1 -> addNewAnimal();
-                        case 2 -> database.viewCommands;
+                        case 2 -> database.displayAllAnimals();
                         case 3 -> displayAnimalCommands();
                         case 4 -> teachNewCommand();
                         case 0 -> {
@@ -47,6 +47,11 @@ public class Menu {
             String name = scanner.nextLine();
             System.out.println("Введите список команд через запятую:");
             String skills = scanner.nextLine();
+            System.out.println("Введите возраст животного");
+            String age = scanner.nextLine();                   // спорный  момент
+
+// Правильнее было бы использовать INT, но в Animal написал тип данных String.
+// Поскольку инкрементации возраста нет, то решил оставить тик
 
             System.out.println("Выберите класс животного:");
             System.out.println("1. Собака");
@@ -54,23 +59,29 @@ public class Menu {
             System.out.println("3. Хомяк");
             System.out.println("4. Осёл");
             System.out.println("5. Конь");
+
             int animalClass = scanner.nextInt();
             scanner.nextLine();
 
-            Animals animal;
+            Animals animals;
             switch (animalClass) {
-                case 1 -> animal = new Dog(nameAnimal, skillsAnimal);
-                case 2 -> animal = new Cat(name, skills);
-                case 3 -> animal = new Hamster(name, skills);
-                case 4 -> animal = new Donkey(name, skills);
-                case 5 -> animal = new Hours()se(name, skills);
-                default -> {
+                case 1 :
+                    animals = new Dog(name, skills,age);
+                case 2 :
+                    animals = new Cat(name, skills, age);
+                case 3 :
+                    animals = new Hamster(name, skills, age);
+                case 4 :
+                    animals = new Donkey(name, skills, age);
+                case 5 :
+                    animals = new Hours(name, skills, age);
+                default : {
                     System.out.println("Неверный выбор класса животного.");
                     return;
                 }
             }
 
-            database.addAnimal(animal);
+            database.addAnimal(an);
             System.out.println("Животное успешно добавлено в базу данных.");
         }
 
@@ -93,4 +104,3 @@ public class Menu {
     }
 
 
-}
