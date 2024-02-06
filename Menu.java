@@ -25,17 +25,25 @@ public class Menu {
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1 -> addNewAnimal();
-                    case 2 -> database.displayAllAnimals();
-                    case 3 -> displayAnimalCommands();
-                    case 4 -> teachNewCommand();
-                    case 0 -> {
+                    case 1 :
+                        addNewAnimal();
+                    case 2 :
+                        database.displayAllAnimals();
+                    case 3 :
+                        displayAnimalCommands();
+                    case 4 :
+                        teachNewCommand();
+                    case 0 :
+                    {
                         System.out.println("Программа завершена.");
                         return;
                     }
-                    default -> System.out.println("Неверный выбор. Попробуйте снова.");
+                    default :
+                        System.out.println("Неверный выбор. Попробуйте снова.");
                 }
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException e)
+            // дословно исключенние неверного значения или вне диапазона для ожидаемого типа.
+            {
                 System.out.println("Ошибка: неверный формат ввода. Попробуйте снова.");
                 scanner.nextLine(); // Очистка буфера сканера после ошибочного ввода
             }
@@ -48,6 +56,7 @@ public class Menu {
         String name = scanner.nextLine();
         System.out.println("Введите список команд через запятую:");
         String skills = scanner.nextLine();
+        System.out.println("Введите возраст животного: ");
         String age = scanner.nextLine();
 
 
@@ -57,6 +66,7 @@ public class Menu {
         System.out.println("3. Хомяк");
         System.out.println("4. Осёл");
         System.out.println("5. Конь");
+
         int animalClass = scanner.nextInt();
         scanner.nextLine();
 
@@ -77,7 +87,7 @@ public class Menu {
     }
 
     private void displayAnimalCommands() {
-        System.out.println("Введите имя животного:");
+        System.out.println("Введите имя животного: ");
         String name = scanner.nextLine();
 
         database.displayAnimalCommands(name);

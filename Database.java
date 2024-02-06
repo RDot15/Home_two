@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Database {
     private final List<Animals> animal;
-    private static final String FILE_PATH = "Animal/database.txt";
+    private static final String FILE_PATH = "E://Java_/Home_work_two/database.txt";
 
     public Database() {
         animal = new ArrayList<>();
@@ -47,7 +47,8 @@ public class Database {
 
 
     private void loadDatabase() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("E://Java_/Home_work_two/database.txt"))) {
+           // чтение потока BufferedReader
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -81,9 +82,29 @@ public class Database {
     }
 
 
+
+
+    private void saveDatabase() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("E://Java_/Home_work_two/database.txt"))) {
+            for (Animals animals : animal) {
+                String className = animals.getClass().getSimpleName();
+                String name = animals.getNameAnimal();
+                String skills = animals.getSkillsAnimal().replaceAll(",\\s+", ",");
+                //    \\s - квантификатор позволяющий убрать пробел
+                String age = animals.getAgeAnimal();
+                String line = className + "," + name + "," + skills+ "," + age;
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("База данных успешно сохранена.");
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении базы данных: " + e.getMessage());
+        }
+    }
+
     public void displayAllAnimals() {
         try {
-            File file = new File(FILE_PATH);
+            File file = new File("E://Java_/Home_work_two/database.txt");
             Scanner fileScanner = new Scanner(file);
 
             while (fileScanner.hasNextLine()) {
@@ -93,25 +114,9 @@ public class Database {
 
             fileScanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Файл с данными о животных не найден.");
+            System.out.println("Файл с данными не найден.");
         }
     }
 
-    private void saveDatabase() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
-            for (Animals animals : animal) {
-                String className = animals.getClass().getSimpleName();
-                String name = animals.getNameAnimal();
-                String skills = animals.getSkillsAnimal().replaceAll(",\\s+", ",");
-
-                String line = className + "," + name + "," + skills;
-                writer.write(line);
-                writer.newLine();
-            }
-            System.out.println("База данных успешно сохранена.");
-        } catch (IOException e) {
-            System.out.println("Ошибка при сохранении базы данных: " + e.getMessage());
-        }
-    }
 
 }

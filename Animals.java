@@ -12,7 +12,7 @@ public abstract class Animals {
         this.age = age;
     }
 
-    // геттеры и сеттеры для доступа. Принцип открытости закрытости
+    //  Принцип открытости закрытости
     public String getNameAnimal() {
         return nameAnimal;
     }
