@@ -4,11 +4,17 @@ public class Counter {
 
     public void add() {
         counter++;
+        System.out.println("Счетчик: " +  counter);
     }
-
+/*
    public void showCounter()   {
        System.out.println(counter + " раз");
    }
+   */
+
+
+
+
 /*
     public void close() throws Exception {
         if (counter == 0)

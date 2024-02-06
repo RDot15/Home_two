@@ -8,7 +8,7 @@ public class Menu {
 
     Counter counter1 = new Counter();
     // добавил счетчик
-    Counter counter = new Counter();
+
 
     public Menu(Database database) {
         this.database = database;
@@ -96,9 +96,10 @@ public class Menu {
 
         // Увеличение счетчика
 
-        counter.add();
+
         System.out.println("Животное успешно добавлено в базу данных.");
-        counter1.showCounter();
+        //counter1.showCounter();
+
     }
 
     private void displayAnimalCommands() {

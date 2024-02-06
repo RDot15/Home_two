@@ -13,7 +13,7 @@ public class Database {
         loadDatabase();
     }
 
-
+    Counter counter = new Counter();
 
 
 
@@ -86,7 +86,7 @@ public class Database {
 
             // вывод счетчика
 
-
+            counter.add();
         } catch (IOException e) {
             System.out.println("Ошибка при чтении базы данных: " + e.getMessage());
         }
@@ -107,8 +107,11 @@ public class Database {
                 writer.write(line);
                 writer.newLine();
             }
-            System.out.println("База данных успешно сохранена.");
 
+            // сохранение счетчика
+
+            System.out.println("База данных успешно сохранена.");
+            counter.add();
         } catch (IOException e) {
             System.out.println("Ошибка при сохранении базы данных: " + e.getMessage());
         }
