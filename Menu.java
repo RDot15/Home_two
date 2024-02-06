@@ -6,8 +6,12 @@ public class Menu {
     private final Database database;
     private final Scanner scanner;
 
+    // добавил счетчик
+    Counter counter = new Counter();
+
     public Menu(Database database) {
         this.database = database;
+
         scanner = new Scanner(System.in);
     }
 
@@ -35,6 +39,7 @@ public class Menu {
                         teachNewCommand();
                     case 0 :
                     {
+
                         System.out.println("Программа завершена.");
                         return;
                     }
@@ -52,6 +57,7 @@ public class Menu {
 
 
     private void addNewAnimal() {
+
         System.out.println("Введите имя животного:");
         String name = scanner.nextLine();
         System.out.println("Введите список команд через запятую:");
@@ -83,6 +89,10 @@ public class Menu {
         }
 
         database.addAnimal(animals);
+
+        // Увеличение счетчика
+
+        counter.add();
         System.out.println("Животное успешно добавлено в базу данных.");
     }
 

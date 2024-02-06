@@ -2,6 +2,8 @@
 import java.io.*;
 import java.util.*;
 
+
+
 public class Database {
     private final List<Animals> animal;
     private static final String FILE_PATH = "E://Java_/Home_work_two/database.txt";
@@ -10,6 +12,10 @@ public class Database {
         animal = new ArrayList<>();
         loadDatabase();
     }
+
+    Counter counter1 = new Counter();
+
+
 
     public void addAnimal(Animals animals) {
         animal.add(animals);
@@ -75,7 +81,12 @@ public class Database {
                     System.out.println("Некорректные данные в файле: " + line);
                 }
             }
-            System.out.println("База данных успешно загружена.");
+            System.out.println("База данных успешно загружена. \n");
+
+            // вывод счетчика
+
+          counter1.showCounter();
+
         } catch (IOException e) {
             System.out.println("Ошибка при чтении базы данных: " + e.getMessage());
         }
