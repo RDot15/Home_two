@@ -7,11 +7,16 @@ public class Counter {
     }
 
    public void showCounter()   {
-       System.out.println(counter);
+       System.out.println(counter + " раз");
    }
-
+/*
     public void close() throws Exception {
         if (counter == 0)
             throw new Exception("Счетчик не был увеличен, или ресурс не закрыт.");
+
+
     }
+*/
+
 }
+

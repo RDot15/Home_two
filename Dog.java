@@ -14,5 +14,6 @@ public class Dog extends Animals{
     public void newCommand(String command) {
         String updatedSkills = getSkillsAnimal() + "," + command;
         setSkillsAnimal(updatedSkills);
+        System.out.println("Пес " + getNameAnimal() + " научился новой команде: " + command);
     }
 }

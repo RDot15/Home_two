@@ -6,6 +6,7 @@ public class Menu {
     private final Database database;
     private final Scanner scanner;
 
+    Counter counter1 = new Counter();
     // добавил счетчик
     Counter counter = new Counter();
 
@@ -79,6 +80,7 @@ public class Menu {
 
         Animals animals;
         switch (animalClass) {
+            case 1 -> animals = new Dog(name, skills, age);
             case 2 -> animals = new Cat(name, skills, age);
             case 3 -> animals = new Hamster(name, skills, age);
             case 4 -> animals = new Donkey(name, skills, age);
@@ -96,6 +98,7 @@ public class Menu {
 
         counter.add();
         System.out.println("Животное успешно добавлено в базу данных.");
+        counter1.showCounter();
     }
 
     private void displayAnimalCommands() {
