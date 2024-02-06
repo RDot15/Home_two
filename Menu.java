@@ -72,6 +72,7 @@ public class Menu {
         System.out.println("3. Хомяк");
         System.out.println("4. Осёл");
         System.out.println("5. Конь");
+        System.out.println("6. Верблюд");
 
         int animalClass = scanner.nextInt();
         scanner.nextLine();
@@ -82,6 +83,7 @@ public class Menu {
             case 3 -> animals = new Hamster(name, skills, age);
             case 4 -> animals = new Donkey(name, skills, age);
             case 5 -> animals = new Hours(name, skills, age);
+            case 6 -> animals = new Camel(name, skills, age);
             default -> {
                 System.out.println("Неверный выбор класса животного.");
                 return;

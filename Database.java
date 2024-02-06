@@ -71,6 +71,7 @@ public class Database {
                         case "Hamster" -> animals = new Hamster(name, skills, age);
                         case "Donkey" -> animals = new Donkey(name, skills, age);
                         case "Horse" -> animals = new Hours(name, skills,age);
+                        case "Camel" -> animals = new Camel(name, skills,age);
                         default -> {
                             System.out.println("Неизвестный класс животного: " + className);
                             continue;
