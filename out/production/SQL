@@ -1,0 +1,193 @@
+DROP DATABASE IF EXISTS Human_friends;           -- Если база есть - удаляем
+
+CREATE DATABASE IF NOT EXISTS Human_Friends;      -- Если нет - создаем. -- по факту постоянный апдейт базы
+
+USE Human_friends;
+
+-- Дальше, согласно диаграмме, создаем таблицы с родительским и наследуемыми классами
+
+
+CREATE TABLE Perent_animals (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    animal_class VARCHAR(255)
+   );
+   
+   -- Вписываем в классы значения
+   
+INSERT INTO Perent_animals (animal_class)
+VALUES ("Домашние животные"), ("Вьючные животные");
+
+    
+CREATE TABLE Home_pets (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    animal_id INT,
+    animal_type VARCHAR(255),
+	FOREIGN KEY (animal_id) REFERENCES Perent_animals (id)
+);
+
+INSERT INTO Home_pets (animal_type)
+VALUES ('Собаки'), ('Кошки'), ('Хомяки');
+   
+
+CREATE TABLE Pack_animals (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    animal_id INT,
+    animal_type VARCHAR(255),
+    FOREIGN KEY (animal_id) REFERENCES Perent_animals (id)
+);
+
+INSERT INTO Pack_animals (animal_type)
+VALUES ('Лошади'), ('Верблюды'), ('Ослы');
+
+
+-- 9. Создаем таблицы под кажжое животное и заполняем их
+
+
+CREATE TABLE dogs 
+(       
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(30), 
+    commands VARCHAR(100),
+    birthday DATE,
+    animal_type_ID INT DEFAULT 1,
+    Foreign KEY (animal_type_ID) REFERENCES Home_pets (id) 
+);
+INSERT INTO dogs (name, commands, birthday)
+VALUES ('Тузик', 'бежать, лаять, сидеть', '2020-02-13'),
+('Дружок', 'к ноге, прыгать, сидеть', '2020-03-11');
+
+CREATE TABLE cats 
+(       
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(30), 
+    commands VARCHAR(100),
+    birthday DATE,
+    animal_type_ID INT DEFAULT 2,
+    Foreign KEY (animal_type_ID) REFERENCES Home_pets (id) 
+);
+INSERT INTO cats (name, commands, birthday)
+VALUES ('Маркиза', 'мурлыкать', '2022-05-05'),
+('Пушок', 'лежать', '2020-05-06');
+
+CREATE TABLE hamsters 
+(       
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(30), 
+    commands VARCHAR(100),
+    birthday DATE,
+    animal_type_ID INT DEFAULT 3,
+    Foreign KEY (animal_type_ID) REFERENCES Home_pets (id) 
+);
+INSERT INTO hamsters (name, commands, birthday)
+VALUES ('Хома', 'кушать', '2020-08-11'),
+('Пузырь', 'ко мне', '2022-11-13');
+
+CREATE TABLE horses 
+(       
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(30), 
+    commands VARCHAR(100),
+    birthday DATE,
+    animal_type_ID INT DEFAULT 1,
+    Foreign KEY (animal_type_ID) REFERENCES Pack_animals (id) 
+);
+INSERT INTO horses (name, commands, birthday)
+VALUES ('Конь1', 'но', '2021-07-11'),
+('Конь2', 'шагом', '2016-12-12');
+
+CREATE TABLE camels 
+(       
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(30), 
+    commands VARCHAR(100),
+    birthday DATE,
+    animal_type_ID INT DEFAULT 2,
+    Foreign KEY (animal_type_ID) REFERENCES Pack_animals (id) 
+);
+
+INSERT INTO camels (name, commands, birthday)
+VALUES ('Верблюд1', 'лечь', '2017-10-12'),
+('Верблюд2 ' , 'стоять', '2013-01-21');
+
+CREATE TABLE donkeys 
+(       
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(30), 
+    commands VARCHAR(100),
+    birthday DATE,
+    animal_type_ID INT DEFAULT 3,
+    Foreign KEY (animal_type_ID) REFERENCES Pack_animals (id) 
+);
+INSERT INTO donkeys (name, commands, birthday)
+VALUES ('ИА', 'жевать', '2023-10-14'),
+('Осел_обыкновенный', 'ходить', '2023-12-15');
+
+-- 10. Удаление верблюдов из питомника
+
+
+DELETE FROM camels;
+
+CREATE TABLE horses_and_donkeys SELECT * FROM horses
+UNION SELECT * FROM donkeys;
+
+
+-- 11. Создание новой таблицы, где животные старш 1 года, но младше 3 лет.
+-- Посчитать возраст животных. 
+
+CREATE TEMPORARY TABLE IF NOT EXISTS All_animals
+SELECT * FROM dogs
+UNION SELECT * FROM cats
+UNION SELECT * FROM hamsters
+UNION SELECT * FROM horses
+UNION SELECT * FROM camels
+UNION SELECT * FROM donkeys;
+
+CREATE TABLE Young_animals
+SELECT name, commands, birthday, animal_type_ID, TIMESTAMPDIFF(MONTH, birthday, CURDATE()) AS Age_month
+FROM All_animals
+WHERE birthday BETWEEN ADDDATE(CURDATE(), INTERVAL -3 YEAR) AND ADDDATE(CURDATE(), INTERVAL -1 YEAR);
+
+-- 12. Объединение всех таблиц. 
+
+
+SELECT dogs.name, dogs.commands, dogs.birthday, Home_pets.animal_type, Perent_animals.animal_class
+FROM dogs
+LEFT JOIN Home_pets ON Home_pets.id = dogs.animal_type_ID
+LEFT JOIN Perent_animals ON Perent_animals.id=Home_pets.animal_id
+UNION
+SELECT cats.name, cats.commands, cats.birthday, Home_pets.animal_type, Perent_animals.animal_class
+FROM cats
+LEFT JOIN Home_pets ON Home_pets.id = cats.animal_type_ID
+LEFT JOIN Perent_animals ON Perent_animals.id=Home_pets.animal_id
+UNION
+SELECT hamsters.name, hamsters.commands, hamsters.birthday, Home_pets.animal_type, Perent_animals.animal_class
+FROM hamsters
+LEFT JOIN Home_pets ON Home_pets.id = hamsters.animal_type_ID
+LEFT JOIN Perent_animals ON Perent_animals.id=Home_pets.animal_id
+UNION
+SELECT horses.name, horses.commands, horses.birthday, Pack_animals.animal_type, Perent_animals.animal_class
+FROM horses
+LEFT JOIN Pack_animals ON Pack_animals.id = horses.animal_type_ID
+LEFT JOIN Perent_animals ON Perent_animals.id=Pack_animals.animal_id
+UNION
+SELECT camels.name, camels.commands, camels.birthday, Pack_animals.animal_type, Perent_animals.animal_class
+FROM camels
+LEFT JOIN Pack_animals ON Pack_animals.id = camels.animal_type_ID
+LEFT JOIN Perent_animals ON Perent_animals.id=Pack_animals.animal_id
+UNION
+SELECT donkeys.name, donkeys.commands, donkeys.birthday, Pack_animals.animal_type, Perent_animals.animal_class
+FROM donkeys
+LEFT JOIN Pack_animals ON Pack_animals.id = donkeys.animal_type_ID
+LEFT JOIN Perent_animals ON Perent_animals.id=Pack_animals.animal_id;
+
+
+-- ПРИМЕЧАНИЕ
+
+
+/*
+По факту можно было внедрить в таблицы Home_pets and Pack_animals
+Животных сразу. Тогда бы не пришлось создавать "это"...
+
+Идея каждой таблицы как отдельного класса не лучший вариант
+
+*/
