@@ -2,8 +2,6 @@
 import java.io.*;
 import java.util.*;
 
-
-
 public class Database {
     private final List<Animals> animal;
     private static final String FILE_PATH = "E://Java_/Home_work_two/database.txt";
@@ -12,10 +10,7 @@ public class Database {
         animal = new ArrayList<>();
         loadDatabase();
     }
-
     Counter counter = new Counter();
-
-
 
     public void addAnimal(Animals animals) {
         animal.add(animals);
@@ -26,6 +21,7 @@ public class Database {
         for (Animals animals : animal) {
             if (animals.getNameAnimal().equals(name)) {
                 animals.viewCommands();
+
                 return;
             }
         }
@@ -52,26 +48,61 @@ public class Database {
     }
 
 
+
+    private void saveDatabase() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("E://Java_/Home_work_two/database.txt"))) {
+            for (Animals animals : animal) {
+                String className = animals.getClass().getSimpleName();
+                String name = animals.getNameAnimal();
+                // возможный КОСЯК
+                 String skills = animals.getSkillsAnimal().replaceAll(",\\s+", ",");
+
+                // объединение строки
+                //    \\s - квантификатор позволяющий убрать пробел
+
+                String age = animals.getAgeAnimal();
+                String line = className + "," + name + ","  + age+ ","+ skills ;
+                writer.write(line);
+                writer.newLine();
+            }
+
+            // сохранение счетчика
+
+            System.out.println("База данных успешно сохранена.");
+            counter.add1();
+
+        } catch (IOException e) {
+            System.out.println("Ошибка при сохранении базы данных: " + e.getMessage());
+        }
+    }
+
+
     private void loadDatabase() {
         try (BufferedReader reader = new BufferedReader(new FileReader("E://Java_/Home_work_two/database.txt"))) {
            // чтение потока BufferedReader
+
+
+            // ВТОРОЙ БАГ
+
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length >= 3) {
+                if (data.length <=5) {
                     String className = data[0];
                     String name = data[1];
-                    String skills = String.join(",", Arrays.copyOfRange(data, 2, data.length));
-                    String age = data[3];
+                    String age = data[2];
+
+                    String skills = String.join(", ", Arrays.copyOfRange(data, 3, data.length));
+
 
                     Animals animals;
                     switch (className) {
-                        case "Dog" -> animals = new Dog(name, skills, age);
-                        case "Cat" -> animals = new Cat(name, skills, age);
-                        case "Hamster" -> animals = new Hamster(name, skills, age);
-                        case "Donkey" -> animals = new Donkey(name, skills, age);
-                        case "Horse" -> animals = new Hours(name, skills,age);
-                        case "Camel" -> animals = new Camel(name, skills,age);
+                        case "Dog" -> animals = new Dog(name, age, skills );
+                        case "Cat" -> animals = new Cat(name, age, skills);
+                        case "Hamster" -> animals = new Hamster(name, age, skills);
+                        case "Donkey" -> animals = new Donkey(name, age, skills);
+                        case "Horse" -> animals = new Hours(name, age,skills);
+                        case "Camel" -> animals = new Camel(name, age,skills);
                         default -> {
                             System.out.println("Неизвестный класс животного: " + className);
                             continue;
@@ -86,7 +117,8 @@ public class Database {
 
             // вывод счетчика
 
-            counter.add();
+            counter.add1();
+
         } catch (IOException e) {
             System.out.println("Ошибка при чтении базы данных: " + e.getMessage());
         }
@@ -94,28 +126,6 @@ public class Database {
 
 
 
-
-    private void saveDatabase() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("E://Java_/Home_work_two/database.txt"))) {
-            for (Animals animals : animal) {
-                String className = animals.getClass().getSimpleName();
-                String name = animals.getNameAnimal();
-                String skills = animals.getSkillsAnimal().replaceAll(",\\s+", ",");
-                //    \\s - квантификатор позволяющий убрать пробел
-                String age = animals.getAgeAnimal();
-                String line = className + "," + name + "," + skills+ "," + age;
-                writer.write(line);
-                writer.newLine();
-            }
-
-            // сохранение счетчика
-
-            System.out.println("База данных успешно сохранена.");
-            counter.add();
-        } catch (IOException e) {
-            System.out.println("Ошибка при сохранении базы данных: " + e.getMessage());
-        }
-    }
 
     public void displayAllAnimals() {
         try {

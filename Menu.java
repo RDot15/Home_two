@@ -48,10 +48,11 @@ public class Menu {
                         System.out.println("Неверный выбор. Попробуйте снова.");
                 }
             } catch (InputMismatchException e)
-            // дословно исключенние неверного значения или вне диапазона для ожидаемого типа.
+            // дословно исключенние неверного значения или вне диапазона для ожидаемого типа
             {
                 System.out.println("Ошибка: неверный формат ввода. Попробуйте снова.");
-                scanner.nextLine(); // Очистка буфера сканера после ошибочного ввода
+                scanner.nextLine();
+                // очистка буфера сканера после ошибочного ввода
             }
         }
     }
@@ -61,11 +62,12 @@ public class Menu {
 
         System.out.println("Введите имя животного:");
         String name = scanner.nextLine();
-        System.out.println("Введите список команд через запятую:");
-        String skills = scanner.nextLine();
+
         System.out.println("Введите возраст животного: ");
         String age = scanner.nextLine();
 
+        System.out.println("Введите список команд через запятую:");
+        String skills = scanner.nextLine();
 
         System.out.println("Выберите класс животного:");
         System.out.println("1. Собака");
@@ -80,12 +82,12 @@ public class Menu {
 
         Animals animals;
         switch (animalClass) {
-            case 1 -> animals = new Dog(name, skills, age);
-            case 2 -> animals = new Cat(name, skills, age);
-            case 3 -> animals = new Hamster(name, skills, age);
-            case 4 -> animals = new Donkey(name, skills, age);
-            case 5 -> animals = new Hours(name, skills, age);
-            case 6 -> animals = new Camel(name, skills, age);
+            case 1 -> animals = new Dog(name, age, skills);
+            case 2 -> animals = new Cat(name, age,skills);
+            case 3 -> animals = new Hamster(name, age, skills);
+            case 4 -> animals = new Donkey(name,  age,skills);
+            case 5 -> animals = new Hours(name,  age,skills);
+            case 6 -> animals = new Camel(name, age,skills);
             default -> {
                 System.out.println("Неверный выбор класса животного.");
                 return;

@@ -2,10 +2,13 @@ public class Counter {
 
     public int counter = 0;
 
-    public void add() {
+    public void add1() {
         counter++;
         System.out.println("Счетчик: " +  counter);
     }
+
+
+
 /*
    public void showCounter()   {
        System.out.println(counter + " раз");
