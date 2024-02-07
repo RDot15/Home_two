@@ -5,3 +5,5 @@ linux
 
 ![5 задание  фото](https://github.com/RDot15/Home_two/assets/129421229/904f2311-9737-4b94-94c2-9b3324adf322)
 
+
+![Диаграмма](https://github.com/RDot15/Home_two/assets/129421229/46193395-15a2-455f-a24f-80c191889973)
